@@ -21,7 +21,7 @@ const Topbar: React.FC<TopbarProps> = ({ setIsSidebar }) => {
   const colorMode = useContext(ColorModeContext);
 
   return (
-    <Box component="div" display="flex" justifyContent="flex-end" p={2}>
+    <Box component="div" display="flex" justifyContent="flex-end" p={1}>
       {/* SEARCH BAR */}
     
 

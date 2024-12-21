@@ -8,7 +8,7 @@ type HeaderProps = {
 const Header : React.FC<HeaderProps>   = ({title})=>{
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-    return <Box mb="30px" sx={{marginX: 'auto', marginY:1}}>
+    return <Box mb="15px" sx={{marginX: 'auto', marginY:'auto'}}>
         {/*
         <Typography variant="h2" color={colors.grey[100]} fontWeight="bold" sx={{mb:"5px"}}>
             {title}

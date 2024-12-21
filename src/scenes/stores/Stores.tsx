@@ -51,10 +51,15 @@ const Stores = (props: any) => {
         <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', borderTopLeftRadius: 5, overflow: 'hidden' }}>
             <Header title={"Estado de las tiendas"} />
             <Box sx={{ width: '90%', marginX: 'auto', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginBottom: 2 }}>
-                <IconButton type="button" sx={{ p: 1 }} onClick={fetchLocales} disabled={loading}>
-                    <SyncIcon />
-                </IconButton>
             </Box>
+         <Box   sx={{
+    display: "flex",
+    alignItems: "center",
+    position: "relative",
+    marginX:"auto"
+  }}>
+        
+
             <Tabs
                 value={tabValue}
                 onChange={handleTabChange}
@@ -74,6 +79,10 @@ const Stores = (props: any) => {
                 <Tab label="Tiendas Operativas" />
                 <Tab label="Control de Tiendas" />
             </Tabs>
+            <IconButton type="button" sx={{ p: 1 }} onClick={fetchLocales} disabled={loading}>
+                    <SyncIcon />
+                </IconButton>
+         </Box>
             <Box sx={{ flex: 1, display: 'flex', overflow: 'hidden', width: '90%', marginX: 'auto', maxHeight: '75vh' }}>
                 {loading ? (
                     <SkeletonLoader count={8} />

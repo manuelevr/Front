@@ -76,12 +76,12 @@ const ControlDeReinicio = (props: any) => {
             {/* Header */}
             <Header title={"Control de Reinicio"} />
             {/* Botón de sincronización */}
-            <Box sx={{ width: '90%', marginX: 'auto', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginBottom: 2 }}>
-                <IconButton type="button" sx={{ p: 1 }} onClick={handleSyncClick} disabled={loading}>
-                    <SyncIcon />
-                </IconButton>
-            </Box>
-            {/* Tabs */}
+            <Box sx={{
+    display: "flex",
+    alignItems: "center",
+    position: "relative",
+    marginX:"auto"
+  }}>
             <Tabs
                 value={tabValue}
                 onChange={handleTabChange}
@@ -102,6 +102,12 @@ const ControlDeReinicio = (props: any) => {
                 <Tab label="PJD" />
                 <Tab label="Pollo Stop" />
             </Tabs>
+                <IconButton type="button" sx={{ p: 1 }} onClick={handleSyncClick} disabled={loading}>
+                    <SyncIcon />
+                </IconButton>
+            </Box>
+            
+            
             {/* Contenido de los Tabs */}
             <Box sx={{ flex: 1, display: 'flex', overflow: 'hidden', width: '90%', marginX: 'auto', maxHeight: '70vh', minHeight: '70vh' }}>
                 {loading ? (
