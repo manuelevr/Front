@@ -6,10 +6,7 @@ async function obtenerToken(credenciales: Credenciales): Promise<string | null> 
       "Content-Type": "application/json"
     };
     console.log('entre a la obtencion con'+credenciales.password)
-    const bodyContent = JSON.stringify({
-      "username": credenciales.username,
-      "password": credenciales.password
-    });
+  
       
    
     try {
@@ -20,7 +17,8 @@ async function obtenerToken(credenciales: Credenciales): Promise<string | null> 
       });
   
       const data = await response.text();
-      // Suponiendo que el token está en el cuerpo de la respuesta
+      console.log("🚀 ~ obtenerToken ~ data:", response.CustomerId)
+      
       return data;
     } catch (error) {
       console.error("Error al obtener el token:", error);

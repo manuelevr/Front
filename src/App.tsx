@@ -1,22 +1,26 @@
 import { ColorModeContext, useMode } from './theme';
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Topbar from './scenes/global/Topbar';
 import Sidebar from './scenes/global/Sidebar';
-import ControlDeReinicio from './scenes/stores/ControlDeReinicio';
-import FAQ from './scenes/faq';
+import ControlDeReinicio from './scenes/dashboard/stores/ControlDeReinicio';
 import { Route, Routes } from 'react-router-dom';
 import Events from './scenes/events';
-import { DataGrid } from '@mui/x-data-grid';
-import SignIn from './authentication/SignIn';
 import RequireAuth from './authentication/RequireAuth';
-import Stores from './scenes/stores/Stores'
+import Stores from './scenes/dashboard/stores/Stores'
+
 function App() {
   const { theme, colorMode } = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
   const [selected, setSelected] = useState("stores");
   const [Jwt, setJwt] = useState("");
 
+ 
+
+
+  
+  
+  
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>

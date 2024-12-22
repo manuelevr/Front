@@ -8,31 +8,34 @@ async function obtenerLocales(Jwt:string): Promise<LocaltoReset[] | null | undef
         "Authorization": `Bearer ${Jwt}`
     };
        
-
+    
     try {
         const response = await fetch(url, { headers });
         let locales: LocaltoReset[]
         if (response.ok) {
             let responseData = await response.json();
+            console.log("🚀 ~ obtenerLocales ~ responseData:", responseData)
             if (Array.isArray(responseData) && responseData.length > 0) {
                 locales = responseData.map((localData: any) => ({
+                    BrandId: localData.marcas,  // Mapea 'marcas' a 'BrandId'
+                    CustomerId: localData.CustomerId, 
                     Id: localData.local_id,  // Mapea 'local_id' a 'Id'
                     Name: localData.local_nombre,  // Mapea 'local_nombre' a 'Name'
                     StoreId: localData.numero_del_local,  // Mapea 'numero_del_local' a 'StoreId'
-                    BrandId: localData.marcas,  // Mapea 'marcas' a 'BrandId'
-                    LocalGroupId: '',  // LocalGroupId no está en la respuesta, inicialízalo vacío o como desees
-                    needReset: localData.needReset || false,  // Mapea 'needReset', inicialízalo como false si no está definido
-                    lastRestart: localData.lastRestart || null  // Agrega 'lastRestart', puede ser null si no está presente
+                    lastRestart: localData.lastRestart || null,  // Agrega 'lastRestart', puede ser null si no está presente
+                    needReset: localData.needReset || false  // Mapea 'needReset', inicialízalo como false si no está definido
                 }));
-            
+                
+                //console.log("🚀 ~ obtenerLocales ~ locales:", locales)
             
                 
-                console.log("🚀 ~ Locales ~ locales:", locales);
+                
                 return locales;
             } else {
                 console.log("La respuesta de la API está vacía.");
                 return [];
             }
+                console.log("🚀 ~ obtenerLocales ~ locales:", locales)
         } else {
             console.log("Error al obtener los locales:");
             return null;

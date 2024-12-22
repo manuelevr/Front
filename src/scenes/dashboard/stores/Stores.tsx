@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Box, IconButton, Tabs, Tab, useTheme } from "@mui/material";
-import { tokens } from "../../theme";
-import Header from '../../components/Header';
-import {obtenerLocales } from "../../data/locales";
+import { tokens } from "../../../theme";
+import Header from '../../../components/Header';
+import {obtenerLocales } from "../../../data/locales";
 import SyncIcon from '@mui/icons-material/Sync';
 import StoresTable from './StoresTable'; // Asegúrate de tener este componente
-import SkeletonLoader from '../../components/SkeletonLoader';
-import { Local } from "../../interfaces/local";
+import SkeletonLoader from '../../../components/SkeletonLoader';
+import { Local } from "../../../interfaces/local";
 import ControlDeTiendas from './ControlDeTiendas'; // Importar el nuevo componente
 
 const Stores = (props: any) => {

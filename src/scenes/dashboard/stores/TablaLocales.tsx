@@ -4,12 +4,13 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
 import { DataGrid, GridColDef, GridColumnMenu, GridColumnMenuProps } from '@mui/x-data-grid';
-import { LocaltoReset } from "../../interfaces/vistaLocal";
+import { LocaltoReset } from "../../../interfaces/vistaLocal";
 import { Box } from "@mui/material";
-import renderCenterCell from '../../renderCell/renderCenterCell';
-import renderFechaCell from '../../renderCell/renderFechaCell';
-import renderNeedResetCell from '../../renderCell/renderNeedResetCell';
-import ConfirmModal from './ConfirmModal'; // Asegúrate de importar el modal
+import renderCenterCell from '../../../renderCell/renderCenterCell';
+import renderFechaCell from '../../../renderCell/renderFechaCell';
+import renderNeedResetCell from '../../../renderCell/renderNeedResetCell';
+import ConfirmModal from '../../../components/ConfirmModal';
+
 
 interface TablaLocalesProps {
     locales: LocaltoReset[];

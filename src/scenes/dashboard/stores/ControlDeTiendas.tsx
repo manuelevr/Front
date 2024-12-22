@@ -1,13 +1,13 @@
 // StoresTable.tsx
 import React from 'react';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { Local } from "../../interfaces/local";
-import renderEventsCell from '../../renderCell/renderEventsCell'; 
-import renderCenterCell from '../../renderCell/renderCenterCell'; 
-import renderEstadoCell from '../../renderCell/renderEstadoCell'; 
-import renderEstadoSQLLoginCell from '../../renderCell/renderEstadoSQLLoginCell'; 
-import SkeletonLoader from '../../components/SkeletonLoader';
-import renderOperativaCell from '../../renderCell/renderOperativaCell';
+import { Local } from "../../../interfaces/local";
+import renderEventsCell from '../../../renderCell/renderEventsCell'; 
+import renderCenterCell from '../../../renderCell/renderCenterCell'; 
+import renderEstadoCell from '../../../renderCell/renderEstadoCell'; 
+import renderEstadoSQLLoginCell from '../../../renderCell/renderEstadoSQLLoginCell'; 
+import SkeletonLoader from '../../../components/SkeletonLoader';
+import renderOperativaCell from '../../../renderCell/renderOperativaCell';
 interface StoresTableProps {
     locales: Local[] | null; // Acepta locales como prop
     loading: boolean;        // Estado de carga

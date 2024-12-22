@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Box, useTheme, IconButton, Tabs, Tab } from "@mui/material";
-import { tokens } from "../../theme";
-import Header from '../../components/Header';
-import { obtenerLocales } from "../../data/DataVistaLocal"; 
+import { tokens } from "../../../theme";
+import Header from '../../../components/Header';
+import { obtenerLocales } from "../../../data/DataVistaLocal"; 
 import SyncIcon from '@mui/icons-material/Sync';
-import SkeletonLoader from '../../components/SkeletonLoader';
+import SkeletonLoader from '../../../components/SkeletonLoader';
 import TablaLocales from './TablaLocales'; 
-import { LocaltoReset } from '../../interfaces/vistaLocal';
+import { LocaltoReset } from '../../../interfaces/vistaLocal';
 
 const ControlDeReinicio = (props: any) => {
     const BrandIdPJD='329294b4-7ae9-44f6-8c58-ec758fb7b6dd';
@@ -25,19 +25,21 @@ const ControlDeReinicio = (props: any) => {
     const [loading, setLoading] = useState(true);
     const [tabValue, setTabValue] = useState<number>(0);
     const [needRefresh, setNeedRefresh] = useState(false); // Nuevo estado para el refresh
-
+    
     // Función para manejar el cambio de tab
     const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
         setTabValue(newValue);
     };
-
+    
     // Función para obtener datos
     const fetchData = useCallback(async () => {
         setLoading(true);
         try {
             const data = await obtenerLocales(Jwt);
+            
             setLocales(data || []); // Asegúrate de que no sea null
-    
+            console.log("🚀 ~ ControlDeReinicio ~ locales:", locales)
+            
             // Filtrar y establecer locales para PJD y Pollo
             if (data) {
                 const pjdLocales = data.filter(local => local.BrandId === BrandIdPJD);

@@ -14,7 +14,8 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Credenciales } from '../interfaces/credenciales';
 import { obtenerToken } from './auth';
-
+import { useContext } from 'react';
+import { Contexto } from '../Context/MyContext';
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -23,9 +24,20 @@ interface SignInProps {
   setJwt: React.Dispatch<React.SetStateAction<string >>;
 }
 const SignIn: React.FC<SignInProps> = ({ setIsAuthenticated ,setJwt }) => {
+ //Contexto
+    const{contextState} =  useContext(Contexto);
+    console.log("🚀 ~ contextState:", contextState)
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ //Contexto
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    
+       
     const data = new FormData(event.currentTarget);
     const credenciales: Credenciales = {
       username: data.get('user') ? data.get('user')!.toString() : '',
@@ -33,12 +45,17 @@ const SignIn: React.FC<SignInProps> = ({ setIsAuthenticated ,setJwt }) => {
     };
     import.meta.env.VITE_REACT_APP_JWT ="";
     const tokenResponse = await obtenerToken(credenciales);
+    console.log("🚀 ~ handleSubmit ~ tokenResponse:", tokenResponse)
    
     if (tokenResponse?.toString().includes('token')) {
-      const { token } = JSON.parse(tokenResponse);
+      const { token,CustomerId } = JSON.parse(tokenResponse);
+      
       import.meta.env.VITE_REACT_APP_JWT = token;
+      import.meta.env.VITE_REACT_APP_COSTUMER_ID=CustomerId;
+      console.log("🚀 ~ handleSubmit ~ import.meta.env.VITE_REACT_APP_COSTUMER_ID:", import.meta.env.VITE_REACT_APP_COSTUMER_ID)
+    
       setJwt(token);
-      console.log("🚀 ~ handleSubmit ~ import.meta.env.VITE_REACT_APP_JWT:", import.meta.env.VITE_REACT_APP_JWT)
+    
       setIsAuthenticated(true);
     }
 };

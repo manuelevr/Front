@@ -3,10 +3,13 @@ import { Local } from '../interfaces/local';
 import { obtenerToken } from '../authentication/auth';
 
 const urlbase = import.meta.env.VITE_REACT_APP_API_URL ;
+console.log("🚀 ~ urlbase:", urlbase)
 
 async function obtenerLocales(Jwt:string, filter:boolean): Promise<Local[] | null | undefined> {
+    const CostumerId =import.meta.env.VITE_REACT_APP_COSTUMER_ID;
+    console.log("🚀 ~ obtenerLocales ~ CostumerId:", CostumerId)
+    
     const url = filter? (import.meta.env.VITE_REACT_APP_API_URL + "/localoperativo"):(import.meta.env.VITE_REACT_APP_API_URL + "/fulllocal");
-
     let headers: HeadersInit = {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${Jwt}`
@@ -14,6 +17,7 @@ async function obtenerLocales(Jwt:string, filter:boolean): Promise<Local[] | nul
        
 
     try {
+        
         const response = await fetch(url, { headers });
 
         if (response.ok) {
