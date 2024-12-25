@@ -97,6 +97,7 @@ const useColumns = (): GridColDef[] => {
 };
 
 const TablaLocales: React.FC<TablaLocalesProps> = ({ locales, BrandId,setNeedRefresh }) => {
+   
     const [modalOpen, setModalOpen] = useState(false);
     
     const handleAllReset = async() => {

@@ -7,7 +7,7 @@ interface RequireAuthProps {
 
 
 
-const RequireAuth = ({ children, setJwt }: { children: ReactNode, setJwt: any }) =>{
+const RequireAuth = ({ children, setJwt,setUser }: { children: ReactNode, setJwt: any,setUser:React.Dispatch<React.SetStateAction<string>> }) =>{
   
 
   const [isAuthenticated, setIsAuthenticated] = useState<boolean >(false);
@@ -43,7 +43,7 @@ const RequireAuth = ({ children, setJwt }: { children: ReactNode, setJwt: any })
   }
   
  
-  return isAuthenticated ? <>{children}</> : <SignIn setIsAuthenticated={setIsAuthenticated} setJwt ={setJwt} />;
+  return isAuthenticated ? <>{children}</> : <SignIn setIsAuthenticated={setIsAuthenticated} setJwt ={setJwt} setUser={setUser}/>;
 };
 
 export default RequireAuth;

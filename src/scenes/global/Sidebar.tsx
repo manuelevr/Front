@@ -1,4 +1,4 @@
-import React, { useState,useEffect  } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import { tokens } from "../../theme";
@@ -11,8 +11,6 @@ import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import "react-pro-sidebar/dist/css/styles.css";
 import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-
-
 
 type ItemProps = {
   title: string;
@@ -44,10 +42,10 @@ const Item = ({ title, to, icon, selected, setSelected }: ItemProps) => {
 interface SidebarProps {
   selected: string;
   setSelected: React.Dispatch<React.SetStateAction<string>>;
+  username: string;  // Agregado el prop `username` de tipo string
 }
 
-
-const Sidebar: React.FC<SidebarProps> = ({selected, setSelected }) => {
+const Sidebar: React.FC<SidebarProps> = ({ selected, setSelected, username }) => {
   const theme = useTheme();
   const [ancho, setancho] = useState(window.innerWidth);
   const colors = tokens(theme.palette.mode);
@@ -65,7 +63,8 @@ const Sidebar: React.FC<SidebarProps> = ({selected, setSelected }) => {
     return () => {
         window.removeEventListener('resize', handleResize); // Limpiar el event listener al desmontar el componente
     };
-}, []);
+  }, [ancho]);
+
   return (
     <Box
       sx={{
@@ -85,8 +84,7 @@ const Sidebar: React.FC<SidebarProps> = ({selected, setSelected }) => {
           color: "#6870fa !important",
         },
         height:"100%"
-      }
-    }
+      }}
     >
       <ProSidebar collapsed={isCollapsed}>
         <Menu>
@@ -134,7 +132,7 @@ const Sidebar: React.FC<SidebarProps> = ({selected, setSelected }) => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  User
+                  {username} {/* Mostrar el nombre de usuario */}
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
                   Merchise Online Services
@@ -174,8 +172,6 @@ const Sidebar: React.FC<SidebarProps> = ({selected, setSelected }) => {
               selected={selected}
               setSelected={setSelected}
             />
-            
-            
           </Box>
         </Menu>
       </ProSidebar>

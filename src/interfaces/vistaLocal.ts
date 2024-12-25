@@ -3,6 +3,7 @@ export interface LocaltoReset {
     Name: string;
     StoreId: string;
     BrandId: string;
+    BrandName: string;
     CustomerId: string;
     needReset?: boolean; 
 }

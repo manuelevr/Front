@@ -5,7 +5,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -14,51 +13,78 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Credenciales } from '../interfaces/credenciales';
 import { obtenerToken } from './auth';
-import { useContext } from 'react';
-import { Contexto } from '../Context/MyContext';
+import {  useState, useEffect } from 'react';
 
-// TODO remove, this demo shouldn't need to reset the theme.
+// Tema por defecto
 const defaultTheme = createTheme();
+
 interface SignInProps {
-  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean >>;
-  setJwt: React.Dispatch<React.SetStateAction<string >>;
+  setIsAuthenticated: React.Dispatch<React.SetStateAction<boolean>>;
+  setJwt: React.Dispatch<React.SetStateAction<string>>;
+  setUser: React.Dispatch<React.SetStateAction<string>>;
 }
-const SignIn: React.FC<SignInProps> = ({ setIsAuthenticated ,setJwt }) => {
- //Contexto
-    const{contextState} =  useContext(Contexto);
-    console.log("🚀 ~ contextState:", contextState)
- 
- 
- 
- 
- 
- 
- 
- //Contexto
+
+const SignIn: React.FC<SignInProps> = ({ setIsAuthenticated, setJwt,setUser }) => {
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [rememberMe, setRememberMe] = useState<boolean>(false);
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+
+  // Cargar los datos del usuario si existen en localStorage
+  useEffect(() => {
+    const storedUsername = localStorage.getItem('username');
+    const storedPassword = localStorage.getItem('password');
+    const storedToken = localStorage.getItem('token')||'';
+    const storedRememberMe = localStorage.getItem('rememberMe');
+
+    if (storedRememberMe === 'true') {
+      setUsername(storedUsername || '');
+      setPassword(storedPassword || '');
+      setJwt(storedToken); 
+      setRememberMe(true);
+    }
+  }, []);
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-       
-    const data = new FormData(event.currentTarget);
+
     const credenciales: Credenciales = {
-      username: data.get('user') ? data.get('user')!.toString() : '',
-      password: data.get('password') ? data.get('password')!.toString() : ''
+      username,
+      password,
     };
-    import.meta.env.VITE_REACT_APP_JWT ="";
-    const tokenResponse = await obtenerToken(credenciales);
-    console.log("🚀 ~ handleSubmit ~ tokenResponse:", tokenResponse)
-   
-    if (tokenResponse?.toString().includes('token')) {
-      const { token,CustomerId } = JSON.parse(tokenResponse);
-      
-      import.meta.env.VITE_REACT_APP_JWT = token;
-      import.meta.env.VITE_REACT_APP_COSTUMER_ID=CustomerId;
-      console.log("🚀 ~ handleSubmit ~ import.meta.env.VITE_REACT_APP_COSTUMER_ID:", import.meta.env.VITE_REACT_APP_COSTUMER_ID)
-    
-      setJwt(token);
-    
-      setIsAuthenticated(true);
+    setUser(credenciales.username);
+    // Restablecer el mensaje de error al enviar el formulario
+    setErrorMessage('');
+
+    try {
+      const tokenResponse = await obtenerToken(credenciales);
+      if (tokenResponse?.toString().includes('token')) {
+        const { token } = JSON.parse(tokenResponse);
+
+        setJwt(token);
+        setIsAuthenticated(true);
+
+        // Si "Remember me" está seleccionado, guardar las credenciales
+        if (rememberMe) {
+          localStorage.setItem('username', username);
+          localStorage.setItem('password', password);
+          localStorage.setItem('token', token);
+          localStorage.setItem('rememberMe', 'true');
+        } else {
+          // Si no está seleccionado, limpiar el almacenamiento
+          localStorage.removeItem('username');
+          localStorage.removeItem('password');
+          localStorage.removeItem('token');
+          localStorage.removeItem('rememberMe');
+        }
+      } else {
+        setErrorMessage('Usuario o contraseña incorrectos.');
+      }
+    } catch (error) {
+      console.error('Error al obtener el token:', error);
+      setErrorMessage('Hubo un problema al iniciar sesión. Por favor, intenta nuevamente.');
     }
-};
+  };
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -78,16 +104,26 @@ const SignIn: React.FC<SignInProps> = ({ setIsAuthenticated ,setJwt }) => {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
+
+          {/* Mostrar el mensaje de error si existe */}
+          {errorMessage && (
+            <Typography color="error" sx={{ mt: 2 }}>
+              {errorMessage}
+            </Typography>
+          )}
+
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
               fullWidth
               id="user"
-              label="Usario"
+              label="Usuario"
               name="user"
               autoComplete="Usuario"
               autoFocus
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
             <TextField
               margin="normal"
@@ -98,9 +134,18 @@ const SignIn: React.FC<SignInProps> = ({ setIsAuthenticated ,setJwt }) => {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={
+                <Checkbox
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                  value="remember"
+                  color="primary"
+                />
+              }
               label="Remember me"
             />
             <Button
@@ -111,13 +156,11 @@ const SignIn: React.FC<SignInProps> = ({ setIsAuthenticated ,setJwt }) => {
             >
               Sign In
             </Button>
-           
           </Box>
         </Box>
-        
       </Container>
     </ThemeProvider>
   );
-}
+};
 
 export default SignIn;

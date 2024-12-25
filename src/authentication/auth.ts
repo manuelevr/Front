@@ -17,7 +17,7 @@ async function obtenerToken(credenciales: Credenciales): Promise<string | null> 
       });
   
       const data = await response.text();
-      console.log("🚀 ~ obtenerToken ~ data:", response.CustomerId)
+     // console.log("🚀 ~ obtenerToken ~ data:", data)
       
       return data;
     } catch (error) {

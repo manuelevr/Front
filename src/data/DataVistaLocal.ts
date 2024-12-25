@@ -1,4 +1,5 @@
 import { LocaltoReset } from '../interfaces/vistaLocal';
+import { ConteoMarca } from '../interfaces/marcas';
 
 async function obtenerLocales(Jwt:string): Promise<LocaltoReset[] | null | undefined> {
     const url = import.meta.env.VITE_REACT_APP_API_URL + "/NeedResetSotres";
@@ -14,10 +15,11 @@ async function obtenerLocales(Jwt:string): Promise<LocaltoReset[] | null | undef
         let locales: LocaltoReset[]
         if (response.ok) {
             let responseData = await response.json();
-            console.log("🚀 ~ obtenerLocales ~ responseData:", responseData)
+           
             if (Array.isArray(responseData) && responseData.length > 0) {
                 locales = responseData.map((localData: any) => ({
                     BrandId: localData.marcas,  // Mapea 'marcas' a 'BrandId'
+                    BrandName: localData.nombremarcas,  // Mapea 'marcas' a 'BrandId'
                     CustomerId: localData.CustomerId, 
                     Id: localData.local_id,  // Mapea 'local_id' a 'Id'
                     Name: localData.local_nombre,  // Mapea 'local_nombre' a 'Name'
@@ -46,4 +48,7 @@ async function obtenerLocales(Jwt:string): Promise<LocaltoReset[] | null | undef
     }
 }
 
-export { obtenerLocales };
+
+
+
+export { obtenerLocales  };

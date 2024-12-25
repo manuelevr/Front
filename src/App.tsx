@@ -14,6 +14,7 @@ function App() {
   const [isSidebar, setIsSidebar] = useState(true);
   const [selected, setSelected] = useState("stores");
   const [Jwt, setJwt] = useState("");
+  const [User, setUser] = useState("");
 
  
 
@@ -25,11 +26,11 @@ function App() {
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <RequireAuth setJwt={setJwt}>
+        <RequireAuth setJwt={setJwt} setUser={setUser}>
           <div style={{ display: 'flex', height: '100vh', maxHeight: '100%', minHeight: '100vh' }}>
-            <Sidebar  selected={selected} setSelected={setSelected}/>
+            <Sidebar  selected={selected} setSelected={setSelected} username={User}/>
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', maxHeight: '100%', minWidth: '300px', minHeight: '100vh' }}>
-              <Topbar setIsSidebar={setIsSidebar} />
+            <Topbar setIsSidebar={setIsSidebar} setJWT={setJwt} />
               <div style={{ flex: 1, overflow: 'visible', display: 'flex', flexDirection: 'column', maxHeight: '100%' }}>
                 <div className="pepe" style={{ width: '100%', overflowX: 'auto', height: 'auto' }}>
                   <Routes>
