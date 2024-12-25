@@ -7,6 +7,7 @@ import renderCenterCell from '../../../renderCell/renderCenterCell';
 import renderEstadoCell from '../../../renderCell/renderEstadoCell'; 
 import renderEstadoSQLLoginCell from '../../../renderCell/renderEstadoSQLLoginCell'; 
 import SkeletonLoader from '../../../components/SkeletonLoader';
+import { esES } from '@mui/x-data-grid/locales';
 interface StoresTableProps {
     locales: Local[] | null; // Acepta locales como prop
     loading: boolean;        // Estado de carga
@@ -78,6 +79,7 @@ const StoresTable: React.FC<StoresTableProps> = ({ locales, loading }) => {
             ) : (
                 <DataGrid
                     rows={locales || []}
+                    localeText={esES.components.MuiDataGrid.defaultProps.localeText}
                     columns={useColumns()}
                     initialState={{
                         pagination: {

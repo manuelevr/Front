@@ -10,7 +10,7 @@ import renderCenterCell from '../../../renderCell/renderCenterCell';
 import renderFechaCell from '../../../renderCell/renderFechaCell';
 import renderNeedResetCell from '../../../renderCell/renderNeedResetCell';
 import ConfirmModal from '../../../components/ConfirmModal';
-
+import { esES } from '@mui/x-data-grid/locales';
 
 interface TablaLocalesProps {
     locales: LocaltoReset[];
@@ -115,6 +115,7 @@ const TablaLocales: React.FC<TablaLocalesProps> = ({ locales, BrandId,setNeedRef
                 rows={locales || []}
                 columns={useColumns()}
                 getRowId={(row) => row.StoreId}
+                localeText={esES.components.MuiDataGrid.defaultProps.localeText}
                 initialState={{
                     pagination: {
                         paginationModel: {

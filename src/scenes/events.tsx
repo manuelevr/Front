@@ -12,7 +12,7 @@ import renderIdCell from '../renderCell/renderIdCell'; // Importar función de I
 import renderCenterCell from '../renderCell/renderCenterCell'; // Importar función de centrado
 import renderDescripcionCell from '../renderCell/renderDescripcionCell'; // Importar función de descripción
 import renderFechaCell from '../renderCell/renderFechaCell'; // Importar función de descripción
-
+import { esES } from '@mui/x-data-grid/locales';
 
 
 const Events = (props: any) => {
@@ -88,6 +88,7 @@ const Events = (props: any) => {
                         <DataGrid
                             rows={eventos || []}
                             columns={columns}
+                            localeText={esES.components.MuiDataGrid.defaultProps.localeText}
                             initialState={{
                                 pagination: {
                                     paginationModel: {
